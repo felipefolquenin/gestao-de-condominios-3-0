@@ -1,0 +1,444 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Echo Jardinagem — Gestão de Condomínios</title>
+<style>
+:root{--c900:#0d2b1a;--c800:#1a4a2e;--c700:#2d6a4f;--c600:#40916c;--c500:#52b788;--c400:#74c69d;--c300:#95d5b2;--c200:#b7e4c7;--c100:#d8f3dc;--c50:#f0faf3;--g800:#1f2d26;--g600:#4a5a50;--g400:#8a9a8f;--g200:#e2ebe4}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter','Segoe UI',sans-serif;background:var(--c50);color:var(--g800);min-height:100vh}
+
+.header{background:linear-gradient(135deg,var(--c900),var(--c800));padding:1.2rem 1.5rem 1rem;box-shadow:0 2px 16px rgba(0,0,0,.3)}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.9rem;gap:.7rem}
+.header-title small{color:var(--c400);font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;display:block}
+.header-title h1{color:#fff;font-size:1.05rem;font-weight:800;margin-top:.15rem}
+.header-btns{display:flex;gap:.45rem;flex-shrink:0}
+.progress-label{display:flex;justify-content:space-between;margin-bottom:.35rem}
+.progress-label span{font-size:.72rem;color:var(--c300)}
+.progress-label strong{font-size:.72rem;color:var(--c400);font-weight:700}
+.progress-bar{background:rgba(255,255,255,.15);border-radius:100px;height:6px;overflow:hidden}
+.progress-fill{background:linear-gradient(90deg,var(--c500),var(--c400));height:100%;border-radius:100px;transition:width .5s}
+
+.btn{border:none;border-radius:100px;cursor:pointer;font-family:inherit;font-weight:700;display:inline-flex;align-items:center;gap:.4rem;transition:all .2s}
+.btn-sm{padding:.5rem .85rem;font-size:.76rem}
+.btn-md{padding:.72rem 1.4rem;font-size:.88rem}
+.btn-lg{padding:.78rem 1.8rem;font-size:.9rem}
+.btn-primary{background:var(--c800);color:#fff}.btn-primary:hover{background:var(--c700)}
+.btn-green{background:#25D366;color:#fff;box-shadow:0 2px 8px rgba(37,211,102,.3)}.btn-green:hover{background:#20bd5a}
+.btn-amber{background:#f59e0b;color:#fff}
+.btn-ghost{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.btn-outline{background:var(--c50);border:1.5px solid var(--c200);color:var(--c700)}
+.btn-danger{background:#fff5f5;border:1.5px solid #fecaca;color:#ef4444}
+.btn-cancel{background:none;border:1.5px solid var(--g200);color:var(--g600)}
+
+.tabs{background:#fff;border-bottom:2px solid var(--g200);display:flex;padding:0 1rem;overflow-x:auto}
+.tab-btn{background:none;border:none;border-bottom:2.5px solid transparent;margin-bottom:-2px;padding:.8rem .85rem;font-size:.82rem;font-weight:500;color:var(--g400);cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:inherit;transition:all .2s}
+.tab-btn.active{font-weight:700;color:var(--c700);border-bottom-color:var(--c500)}
+
+.content{padding:1.2rem;max-width:760px;margin:0 auto}
+.tab-pane{display:none}.tab-pane.active{display:block}
+
+.card{background:#fff;border-radius:14px;border:1.5px solid var(--g200);overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:.9rem}
+.card-hdr{background:linear-gradient(135deg,var(--c800),var(--c900));padding:.85rem 1.2rem;display:flex;align-items:center;justify-content:space-between}
+.card-hdr.done{background:linear-gradient(135deg,var(--c700),var(--c800))}
+.card-hdr.urgent{background:linear-gradient(135deg,#92400e,#78350f)}
+.card-hdr h3{color:#fff;font-weight:700;font-size:.9rem}
+.card-hdr p{color:var(--c300);font-size:.7rem;margin-top:.1rem}
+.card-hdr p.urg{color:#fcd34d}
+.badge{background:rgba(255,255,255,.15);color:#fff;border-radius:100px;padding:.22rem .7rem;font-size:.73rem;font-weight:700;flex-shrink:0}
+.badge.done{background:var(--c500)}.badge.amber{background:#f59e0b}
+.card-body{padding:0 1.2rem}
+.crow{display:flex;align-items:center;gap:.8rem;padding:.78rem 0;border-bottom:1px solid var(--c50);cursor:pointer;user-select:none}
+.crow:last-child{border-bottom:none}
+.crow.nc{cursor:default}
+.chk{width:22px;height:22px;border-radius:6px;border:2px solid var(--c100);background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;font-size:.72rem;font-weight:900;color:#fff}
+.chk.on{background:var(--c500);border-color:var(--c500)}
+.sn{font-size:.85rem;font-weight:600;color:var(--g800)}
+.sn.done{color:var(--g400);text-decoration:line-through}
+.sm{font-size:.71rem;color:var(--g400);margin-top:.08rem}
+.nb{font-size:.72rem;font-weight:700;padding:.22rem .65rem;border-radius:100px;flex-shrink:0}
+.nb.sent{color:var(--c500);background:var(--c100)}.nb.fail{color:#ef4444;background:#fef2f2}.nb.pend{color:#f59e0b;background:#fef3c7}
+
+.ci{background:#fff;border-radius:12px;border:1.5px solid var(--g200);padding:1rem 1.2rem;display:flex;align-items:center;gap:1rem;box-shadow:0 1px 6px rgba(0,0,0,.04);margin-bottom:.75rem}
+.ci-info{flex:1;min-width:0}.ci-info h3{font-weight:700;font-size:.9rem;color:var(--c800)}
+.ci-info .addr{font-size:.73rem;color:var(--g400);margin-top:.1rem}
+.ci-info .meta{font-size:.73rem;margin-top:.28rem;display:flex;align-items:center;gap:.45rem}
+.dot{width:3px;height:3px;border-radius:50%;background:var(--c100);display:inline-block}
+.ci-btns{display:flex;gap:.4rem;flex-shrink:0}
+.ci-btns button{border-radius:8px;padding:.38rem .7rem;font-size:.78rem;cursor:pointer;font-family:inherit}
+.tabbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.1rem}
+.tabbar p{font-size:.83rem;color:var(--g600)}
+
+.empty{text-align:center;padding:3.5rem 1rem;background:#fff;border-radius:14px;border:1.5px dashed var(--g200);color:var(--g400)}
+.empty .ei{font-size:3rem;margin-bottom:1rem}
+.empty h3{font-weight:700;color:var(--g600);margin-bottom:.4rem;font-size:.95rem}
+.empty p{font-size:.83rem}
+
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:999;display:none;align-items:flex-end;justify-content:center}
+.ov.open{display:flex}
+.mbox{background:#fff;border-radius:20px 20px 0 0;padding:1.5rem;width:100%;max-width:520px;max-height:93vh;overflow-y:auto}
+.mhdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem}
+.mhdr h2{font-size:1rem;font-weight:800;color:var(--c800)}
+.mcls{background:none;border:none;font-size:1.4rem;cursor:pointer;color:#aaa;line-height:1}
+
+.fg{margin-bottom:.85rem}
+.fl{display:block;font-size:.72rem;font-weight:700;color:var(--c700);margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.05em}
+.fi{background:var(--c50);border:1.5px solid var(--c100);border-radius:9px;padding:.65rem .9rem;font-size:.88rem;font-family:inherit;color:var(--g800);outline:none;width:100%;box-sizing:border-box;transition:border-color .2s}
+.fi:focus{border-color:var(--c500);box-shadow:0 0 0 3px rgba(82,183,136,.1)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.fdiv{border-top:1px solid var(--g200);padding-top:.85rem;margin-top:.3rem}
+
+.sb{background:#f9fffe;border:1.5px solid var(--c100);border-radius:12px;padding:.9rem;margin-top:.5rem}
+.sb-ttl{font-size:.72rem;font-weight:700;color:var(--c700);margin-bottom:.6rem;text-transform:uppercase;letter-spacing:.04em}
+.sa{display:flex;align-items:flex-start;gap:.6rem;margin-bottom:.4rem;background:var(--c50);border-radius:9px;padding:.6rem .9rem;border:1px solid var(--c100)}
+.sa-info{flex:1}.sa-info strong{display:block;font-size:.84rem;color:var(--c800)}
+.sa-info span{font-size:.73rem;color:var(--c500);display:block;margin-top:.1rem}
+.sa-rm{background:none;border:none;color:#ef4444;cursor:pointer;font-size:1rem;flex-shrink:0}
+.dbtns{display:flex;gap:.28rem;flex-wrap:wrap}
+.dbtn{padding:.32rem .45rem;border-radius:7px;border:1.5px solid var(--g200);background:#fff;color:var(--g600);font-size:.73rem;font-weight:500;cursor:pointer;min-width:36px;text-align:center;transition:all .2s;font-family:inherit}
+.dbtn.on{border-color:var(--c500);background:var(--c500);color:#fff;font-weight:700}
+.wtgl{display:flex;gap:.4rem;margin-top:.5rem}
+.wtgl button{flex:1;padding:.38rem;border-radius:7px;border:1.5px solid var(--g200);background:#fff;color:var(--g600);font-size:.72rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
+.wtgl button.on{border-color:var(--c500);background:var(--c500);color:#fff}
+.mftr{display:flex;gap:.7rem;margin-top:1rem}
+.mftr button{flex:1;border-radius:100px;padding:.75rem;font-size:.88rem;font-family:inherit;cursor:pointer;border:none}
+
+.toast{position:fixed;top:1rem;right:1rem;background:var(--c800);color:#fff;padding:.75rem 1.2rem;border-radius:12px;font-size:.85rem;font-weight:600;z-index:2000;box-shadow:0 4px 16px rgba(0,0,0,.3);display:none;max-width:280px;line-height:1.4}
+.toast.on{display:block}.toast.warn{background:#92400e}
+
+@media(max-width:480px){.frow{grid-template-columns:1fr}.header-btns{gap:.35rem}}
+</style>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div class="header-title">
+      <small>🌿 Echo Jardinagem</small>
+      <h1>Gestão de Condomínios</h1>
+    </div>
+    <div class="header-btns">
+      <button class="btn btn-sm btn-ghost" id="btn-lem" onclick="checkNotifs(true)">🔔 Lembretes</button>
+      <button class="btn btn-sm btn-green" onclick="sendReport()">📲 Relatório</button>
+    </div>
+  </div>
+  <div id="prog-wrap">
+    <div class="progress-label"><span id="mes-lbl"></span><strong id="prog-txt"></strong></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="setTab('agenda')">📋 Agenda</button>
+  <button class="tab-btn" id="btn-prox" onclick="setTab('proximas')">🗓️ Próximas Visitas</button>
+  <button class="tab-btn" onclick="setTab('condominios')">🏢 Condomínios</button>
+</div>
+
+<div class="content">
+  <div id="p-agenda" class="tab-pane active"></div>
+  <div id="p-proximas" class="tab-pane"></div>
+  <div id="p-condominios" class="tab-pane"></div>
+</div>
+
+<!-- MODAL -->
+<div class="ov" id="ov" onclick="if(event.target===this)closeForm()">
+  <div class="mbox">
+    <div class="mhdr">
+      <h2 id="m-ttl">🏢 Novo Condomínio</h2>
+      <button class="mcls" onclick="closeForm()">✕</button>
+    </div>
+    <form onsubmit="saveForm(event)">
+      <input type="hidden" id="f-id">
+      <div class="fg"><label class="fl">Nome *</label><input class="fi" id="f-nome" placeholder="Condomínio das Flores" required></div>
+      <div class="fg"><label class="fl">Endereço</label><input class="fi" id="f-end" placeholder="Rua, número, bairro — Guarapuava"></div>
+      <div class="frow">
+        <div class="fg"><label class="fl">Contato</label><input class="fi" id="f-cont" placeholder="Síndico"></div>
+        <div class="fg"><label class="fl">Telefone</label><input class="fi" id="f-tel" placeholder="(42) 9..."></div>
+      </div>
+      <div class="fdiv">
+        <label class="fl">Serviços Contratados</label>
+        <div id="svcs-list"></div>
+        <div class="sb">
+          <div class="sb-ttl">Adicionar Serviço</div>
+          <div class="frow" style="margin-bottom:.6rem">
+            <select class="fi" id="ns-nome"></select>
+            <select class="fi" id="ns-freq" onchange="updFreq()">
+              <option>Semanal</option><option>Quinzenal</option><option>Mensal</option>
+            </select>
+          </div>
+          <div id="dias-wrap" style="margin-bottom:.6rem">
+            <div style="font-size:.72rem;color:#4a5a50;margin-bottom:.4rem;font-weight:600">Dias da semana:</div>
+            <div class="dbtns" id="dbtns"></div>
+            <div class="wtgl" id="wtgl" style="display:none">
+              <button type="button" class="on" data-p="impar" onclick="setPar('impar')">Semanas ímpares (1ª, 3ª...)</button>
+              <button type="button" data-p="par" onclick="setPar('par')">Semanas pares (2ª, 4ª...)</button>
+            </div>
+          </div>
+          <div id="dmes-wrap" style="display:none;margin-bottom:.6rem">
+            <div style="font-size:.72rem;color:#4a5a50;margin-bottom:.4rem;font-weight:600">Dia do mês:</div>
+            <select class="fi" id="ns-dmes" style="width:auto"></select>
+          </div>
+          <button type="button" class="btn btn-primary btn-md" style="width:100%;border-radius:9px;justify-content:center" onclick="addSvc()">+ Adicionar serviço</button>
+        </div>
+      </div>
+      <label style="display:flex;align-items:center;gap:.6rem;cursor:pointer;margin-top:.85rem">
+        <input type="checkbox" id="f-ativo" checked style="width:16px;height:16px;cursor:pointer;accent-color:#52b788">
+        <span style="font-size:.85rem;font-weight:600;color:#4a5a50">Condomínio ativo</span>
+      </label>
+      <div class="mftr">
+        <button type="button" class="btn btn-cancel" onclick="closeForm()">Cancelar</button>
+        <button type="submit" class="btn btn-primary" style="flex:2">💾 Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PHONE='5542988408840';
+const EJS={key:'lqI0oJGFLIs8N6eq_',svc:'service_u2qllop',tpl:'template_4fdj8fo'};
+const SVCS=['Corte de Grama ✂️','Poda de Árvore 🌳','Irrigação Inteligente 💧','Iluminação de Jardim 💡','Limpeza Geral 🧹','Adubação 🌱','Controle de Pragas 🐛','Paisagismo 🌸'];
+const DS=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+let conds=[],feitos={},notifs={},curTab='agenda',fSvcs=[],selDays=[],selPar='impar';
+
+// ─ Storage ─────────────────────────────────────────
+function mesKey(){return new Date().toISOString().slice(0,7);}
+function mesLbl(){return new Date().toLocaleDateString('pt-BR',{month:'long',year:'numeric'}).replace(/^\w/,c=>c.toUpperCase());}
+function dkey(d){return new Date(d).toISOString().slice(0,10);}
+function uid(){return Math.random().toString(36).slice(2,9);}
+function load(){
+  try{conds=JSON.parse(localStorage.getItem('echo-conds')||'[]');}catch{}
+  try{feitos=JSON.parse(localStorage.getItem('echo-feitos:'+mesKey())||'{}');}catch{}
+  try{notifs=JSON.parse(localStorage.getItem('echo-notifs')||'{}');}catch{}
+}
+function saveConds(){localStorage.setItem('echo-conds',JSON.stringify(conds));}
+function saveFeitos(){localStorage.setItem('echo-feitos:'+mesKey(),JSON.stringify(feitos));}
+function saveNotifs(){localStorage.setItem('echo-notifs',JSON.stringify(notifs));}
+
+// ─ Schedule ────────────────────────────────────────
+function isoWeek(date){
+  const d=new Date(date);d.setHours(0,0,0,0);
+  d.setDate(d.getDate()+4-(d.getDay()||7));
+  return Math.ceil((((d-new Date(d.getFullYear(),0,1))/86400000)+1)/7);
+}
+function isOn(svc,date){
+  const ag=svc.agendamento;if(!ag)return false;
+  if(svc.freq==='Mensal')return ag.diaMes===date.getDate();
+  if(!ag.diasSemana||!ag.diasSemana.includes(date.getDay()))return false;
+  if(svc.freq==='Semanal')return true;
+  const w=isoWeek(date);return ag.semPar==='par'?w%2===0:w%2===1;
+}
+function schedTxt(svc){
+  const ag=svc.agendamento;if(!ag)return'';
+  if(svc.freq==='Mensal')return'Dia '+ag.diaMes;
+  if(ag.diasSemana&&ag.diasSemana.length){
+    const dias=ag.diasSemana.map(d=>DS[d]).join(', ');
+    return svc.freq==='Quinzenal'?`${dias} · ${ag.semPar==='par'?'sem. pares':'sem. ímpares'}`:dias;
+  }
+  return'';
+}
+function getVisits(days=7){
+  const list=[],hoje=new Date();hoje.setHours(0,0,0,0);
+  conds.filter(c=>c.ativo!==false).forEach(cond=>{
+    for(let i=1;i<=days;i++){
+      const d=new Date(hoje);d.setDate(hoje.getDate()+i);d.setHours(0,0,0,0);
+      cond.servicos.forEach(svc=>{if(isOn(svc,d))list.push({cond,svc,date:new Date(d)});});
+    }
+  });
+  return list.sort((a,b)=>a.date-b.date);
+}
+
+// ─ Email ───────────────────────────────────────────
+async function sendEmail(p){
+  return fetch('https://api.emailjs.com/api/v1.0/email/send',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({service_id:EJS.svc,template_id:EJS.tpl,user_id:EJS.key,template_params:p})
+  });
+}
+async function checkNotifs(manual=false){
+  const hoje=new Date();hoje.setHours(0,0,0,0);
+  const pend=getVisits(3).filter(v=>{
+    const dias=Math.round((v.date-hoje)/86400000);
+    return dias>=1&&dias<=3&&!notifs[`${v.cond.id}|${v.svc.nome}|${dkey(v.date)}`];
+  }).map(v=>({...v,nk:`${v.cond.id}|${v.svc.nome}|${dkey(v.date)}`,dias:Math.round((v.date-hoje)/86400000)}));
+  if(!pend.length){if(manual)showToast('✅ Nenhuma notificação pendente');return;}
+  const btn=document.getElementById('btn-lem');
+  if(btn)btn.textContent='Enviando...';
+  let sent=0,fail=0;
+  for(const {cond,svc,date,nk,dias} of pend){
+    const ds=date.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});
+    try{
+      await sendEmail({
+        servico:`⚠️ Visita em ${dias} dia${dias>1?'s':''}`,
+        data:ds,horario:`${cond.nome} — ${svc.nome}`,
+        nome:'Echo Jardinagem',telefone:cond.telefone||'—',
+        endereco:cond.endereco||'—',
+        observacoes:`Frequência: ${svc.freq} | Dias: ${schedTxt(svc)}`
+      });
+      notifs[nk]={at:new Date().toISOString(),ok:true};sent++;
+    }catch{notifs[nk]={at:new Date().toISOString(),ok:false};fail++;}
+  }
+  saveNotifs();
+  if(btn){btn.textContent='🔔 Lembretes';}
+  if(manual)showToast(`✅ ${sent} lembrete${sent!==1?'s':''} enviado${sent!==1?'s':''}${fail>0?` · ${fail} falhou`:''}`);
+  renderAll();
+}
+
+// ─ WhatsApp ────────────────────────────────────────
+function sendReport(){
+  const ativos=conds.filter(c=>c.ativo!==false&&c.servicos.length>0);
+  let msg=`🌿 *Echo Jardinagem — ${mesLbl()}*\n\n`;
+  ativos.forEach(c=>{
+    const done=c.servicos.filter(s=>feitos[`${c.id}|${s.nome}`]).length;
+    msg+=`🏢 *${c.nome}* (${done}/${c.servicos.length})\n`;
+    c.servicos.forEach(s=>{msg+=`${feitos[`${c.id}|${s.nome}`]?'✅':'⏳'} ${s.nome} · ${s.freq}\n`;});
+    msg+='\n';
+  });
+  const pend=ativos.flatMap(c=>c.servicos.filter(s=>!feitos[`${c.id}|${s.nome}`]).map(s=>`${c.nome} — ${s.nome}`));
+  msg+=pend.length===0?'🎉 *Todos os serviços concluídos!*':`⚠️ *${pend.length} pendente${pend.length>1?'s':''}:*\n${pend.map(p=>`• ${p}`).join('\n')}`;
+  window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+// ─ Render ──────────────────────────────────────────
+function renderAll(){updHeader();if(curTab==='agenda')rAgenda();if(curTab==='proximas')rProx();if(curTab==='condominios')rConds();updProxBtn();}
+
+function updHeader(){
+  const ativos=conds.filter(c=>c.ativo!==false);
+  const tot=ativos.reduce((a,c)=>a+c.servicos.length,0);
+  const done=ativos.reduce((a,c)=>a+c.servicos.filter(s=>feitos[`${c.id}|${s.nome}`]).length,0);
+  const pct=tot>0?Math.round(done/tot*100):0;
+  const pw=document.getElementById('prog-wrap');
+  if(tot>0){
+    pw.style.display='block';
+    document.getElementById('mes-lbl').textContent=mesLbl();
+    document.getElementById('prog-txt').textContent=`${done}/${tot} · ${pct}%`;
+    document.getElementById('prog-fill').style.width=pct+'%';
+  } else pw.style.display='none';
+  const hoje=new Date();hoje.setHours(0,0,0,0);
+  const pendN=getVisits(3).filter(v=>{const d=Math.round((v.date-hoje)/86400000);return d>=1&&d<=3&&!notifs[`${v.cond.id}|${v.svc.nome}|${dkey(v.date)}`];}).length;
+  const btn=document.getElementById('btn-lem');
+  if(btn){btn.textContent=pendN>0?`🔔 ${pendN} pendente${pendN>1?'s':''}​`:'🔔 Lembretes';btn.className=`btn btn-sm ${pendN>0?'btn-amber':'btn-ghost'}`;}
+}
+function updProxBtn(){
+  const v=getVisits(7);document.getElementById('btn-prox').textContent=`🗓️ Próximas${v.length>0?` (${v.length})`:''}`;
+}
+function empty(ico,ttl,sub){return`<div class="empty"><div class="ei">${ico}</div><h3>${ttl}</h3><p>${sub}</p></div>`;}
+
+function rAgenda(){
+  const el=document.getElementById('p-agenda');
+  const ativos=conds.filter(c=>c.ativo!==false);
+  if(!ativos.length){el.innerHTML=empty('🏢','Nenhum condomínio cadastrado','Vá em "Condomínios" para adicionar');return;}
+  el.innerHTML=ativos.map(c=>{
+    const done=c.servicos.filter(s=>feitos[`${c.id}|${s.nome}`]).length;
+    const all=done===c.servicos.length&&c.servicos.length>0;
+    const rows=c.servicos.length===0?'<div style="padding:1rem 1.2rem;color:#8a9a8f;font-size:.83rem">Nenhum serviço</div>':
+      `<div class="card-body">${c.servicos.map(s=>{const k=`${c.id}|${s.nome}`;const ck=feitos[k];
+      return`<div class="crow" onclick="togFeito('${c.id}','${esc(s.nome)}')"><div class="chk ${ck?'on':''}">${ck?'✓':''}</div><div style="flex:1"><div class="sn ${ck?'done':''}">${s.nome}</div><div class="sm">🔄 ${s.freq}${schedTxt(s)?' · '+schedTxt(s):''}</div></div></div>`;}).join('')}</div>`;
+    return`<div class="card"><div class="card-hdr ${all?'done':''}"><div><h3>${c.nome}</h3>${c.contato?`<p>👤 ${c.contato}${c.telefone?' · '+c.telefone:''}</p>`:''}</div><div class="badge ${all?'done':''}">${done}/${c.servicos.length}${all?' ✅':''}</div></div>${rows}</div>`;
+  }).join('');
+}
+
+function rProx(){
+  const el=document.getElementById('p-proximas');
+  const visits=getVisits(7);const hoje=new Date();hoje.setHours(0,0,0,0);
+  if(!visits.length){el.innerHTML=empty('🗓️','Nenhuma visita nos próximos 7 dias','Configure os dias nos serviços de cada condomínio');return;}
+  const grp={};visits.forEach(v=>{const dk=dkey(v.date);if(!grp[dk])grp[dk]=[];grp[dk].push(v);});
+  el.innerHTML=Object.entries(grp).map(([dk,vs])=>{
+    const d=new Date(dk+'T12:00:00');const dias=Math.round((d-hoje)/86400000);const urg=dias<=2;
+    const dlbl=dias===1?'Amanhã ⚡':dias===2?'Em 2 dias ⚠️':d.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});
+    const rows=vs.map(v=>{const nk=`${v.cond.id}|${v.svc.nome}|${dk}`;const n=notifs[nk];
+      const nb=n?(n.ok?'<span class="nb sent">✉️ Enviado</span>':'<span class="nb fail">❌ Falhou</span>'):'<span class="nb pend">⏳ Pendente</span>';
+      return`<div class="crow nc"><div style="flex:1"><div style="font-size:.86rem;font-weight:700;color:#1a4a2e">${v.cond.nome}</div><div style="font-size:.74rem;color:#4a5a50;margin-top:.12rem">${v.svc.nome} · ${v.svc.freq}</div>${v.cond.endereco?`<div style="font-size:.7rem;color:#8a9a8f;margin-top:.08rem">📍 ${v.cond.endereco}</div>`:''}</div>${nb}</div>`;
+    }).join('');
+    return`<div class="card"><div class="card-hdr ${urg?'urgent':''}"><div><h3>${dlbl.charAt(0).toUpperCase()+dlbl.slice(1)}</h3><p class="${urg?'urg':''}">${d.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})}</p></div><div class="badge ${urg?'amber':''}">${dias} dia${dias>1?'s':''}</div></div><div class="card-body">${rows}</div></div>`;
+  }).join('');
+}
+
+function rConds(){
+  const el=document.getElementById('p-condominios');
+  el.innerHTML=`<div class="tabbar"><p>${conds.length} condomínio${conds.length!==1?'s':''}</p><button class="btn btn-primary btn-sm" onclick="openForm()">+ Novo</button></div>`+
+  (!conds.length?empty('🏢','Nenhum condomínio ainda','Clique em "+ Novo" para começar'):
+  conds.map(c=>`<div class="ci"><div class="ci-info"><h3>${c.nome}</h3>${c.endereco?`<div class="addr">📍 ${c.endereco}</div>`:''}<div class="meta"><span style="color:#52b788;font-weight:600">${c.servicos.length} serviço${c.servicos.length!==1?'s':''}</span><span class="dot"></span><span style="color:${c.ativo!==false?'#2d6a4f':'#8a9a8f'};font-weight:600">${c.ativo!==false?'Ativo':'Inativo'}</span></div></div><div class="ci-btns"><button class="btn btn-outline" onclick="openForm('${c.id}')">✏️</button><button class="btn btn-danger" onclick="delCond('${c.id}')">🗑️</button></div></div>`).join(''));
+}
+
+// ─ Actions ─────────────────────────────────────────
+function togFeito(cid,svc){const k=`${cid}|${svc}`;feitos[k]=!feitos[k];if(!feitos[k])delete feitos[k];saveFeitos();rAgenda();updHeader();}
+function delCond(id){if(!confirm('Remover?'))return;conds=conds.filter(c=>c.id!==id);saveConds();renderAll();}
+
+function setTab(id){
+  curTab=id;
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',['agenda','proximas','condominios'][i]===id));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.getElementById('p-'+id).classList.add('active');
+  renderAll();
+}
+
+// ─ Form ────────────────────────────────────────────
+function esc(s){return(s+'').replace(/'/g,"\\'");}
+function openForm(id){
+  fSvcs=[];selDays=[];selPar='impar';
+  const c=id?conds.find(x=>x.id===id):null;
+  document.getElementById('m-ttl').textContent=id?'✏️ Editar Condomínio':'🏢 Novo Condomínio';
+  document.getElementById('f-id').value=id||'';
+  document.getElementById('f-nome').value=c?.nome||'';
+  document.getElementById('f-end').value=c?.endereco||'';
+  document.getElementById('f-cont').value=c?.contato||'';
+  document.getElementById('f-tel').value=c?.telefone||'';
+  document.getElementById('f-ativo').checked=c?c.ativo!==false:true;
+  fSvcs=c?c.servicos.map(s=>({...s,agendamento:{...s.agendamento}})):[];
+  const sel=document.getElementById('ns-nome');
+  sel.innerHTML=SVCS.map(s=>`<option>${s}</option>`).join('');
+  const dm=document.getElementById('ns-dmes');
+  dm.innerHTML=Array.from({length:28},(_,i)=>`<option value="${i+1}">Dia ${i+1}</option>`).join('');
+  const dbt=document.getElementById('dbtns');
+  dbt.innerHTML=DS.map((d,i)=>`<button type="button" class="dbtn" data-d="${i}" onclick="togDay(${i})">${d}</button>`).join('');
+  rFormSvcs();updFreq();
+  document.getElementById('ov').classList.add('open');
+}
+function closeForm(){document.getElementById('ov').classList.remove('open');}
+
+function rFormSvcs(){
+  const el=document.getElementById('svcs-list');
+  el.innerHTML=!fSvcs.length?'<div style="font-size:.8rem;color:#8a9a8f;margin-bottom:.6rem">Nenhum serviço adicionado</div>':
+  fSvcs.map((s,i)=>`<div class="sa"><div class="sa-info"><strong>${s.nome}</strong><span>${s.freq}${schedTxt(s)?' · '+schedTxt(s):''}</span></div><button type="button" class="sa-rm" onclick="remSvc(${i})">✕</button></div>`).join('');
+}
+function remSvc(i){fSvcs.splice(i,1);rFormSvcs();}
+function addSvc(){
+  const nome=document.getElementById('ns-nome').value;
+  const freq=document.getElementById('ns-freq').value;
+  if(fSvcs.find(s=>s.nome===nome))return;
+  const ag=freq==='Mensal'?{diaMes:parseInt(document.getElementById('ns-dmes').value)}:{diasSemana:[...selDays],semPar:selPar};
+  fSvcs.push({nome,freq,agendamento:ag});
+  selDays=[];selPar='impar';
+  document.querySelectorAll('.dbtn').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.wtgl button').forEach(b=>b.classList.toggle('on',b.dataset.p==='impar'));
+  rFormSvcs();
+}
+function togDay(d){
+  const i=selDays.indexOf(d);if(i>=0)selDays.splice(i,1);else selDays.push(d);selDays.sort((a,b)=>a-b);
+  document.querySelectorAll('.dbtn').forEach(b=>b.classList.toggle('on',selDays.includes(parseInt(b.dataset.d))));
+}
+function setPar(p){
+  selPar=p;document.querySelectorAll('.wtgl button').forEach(b=>b.classList.toggle('on',b.dataset.p===p));
+}
+function updFreq(){
+  const f=document.getElementById('ns-freq').value;
+  document.getElementById('dias-wrap').style.display=f==='Mensal'?'none':'block';
+  document.getElementById('dmes-wrap').style.display=f==='Mensal'?'block':'none';
+  document.getElementById('wtgl').style.display=f==='Quinzenal'?'flex':'none';
+}
+function saveForm(e){
+  e.preventDefault();
+  const id=document.getElementById('f-id').value;
+  const c={id:id||uid(),nome:document.getElementById('f-nome').value.trim(),endereco:document.getElementById('f-end').value.trim(),contato:document.getElementById('f-cont').value.trim(),telefone:document.getElementById('f-tel').value.trim(),ativo:document.getElementById('f-ativo').checked,servicos:fSvcs};
+  if(id)conds=conds.map(x=>x.id===id?c:x);else conds.push(c);
+  saveConds();closeForm();renderAll();
+}
+
+// ─ Toast ───────────────────────────────────────────
+function showToast(msg,warn=false){const t=document.getElementById('toast');t.textContent=msg;t.className='toast on'+(warn?' warn':'');setTimeout(()=>t.className='toast',4000);}
+
+// ─ Init ────────────────────────────────────────────
+load();renderAll();
+setTimeout(()=>checkNotifs(false),1200);
+</script>
