@@ -194,6 +194,8 @@ body{font-family:'Inter','Segoe UI',sans-serif;background:var(--c50);color:var(-
 <div class="toast" id="toast"></div>
 
 <script>
+const SUPA_URL = 'https://nfgswtpholucdvlxlbes.supabase.co';
+const SUPA_KEY = 'sb_publishable_gVD90zQwNNMfZipY_uAmXw_XuGqslks';
 const PHONE='5542988408840';
 const EJS={key:'lqI0oJGFLIs8N6eq_',svc:'service_u2qllop',tpl:'template_4fdj8fo'};
 const SVCS=['Corte de Grama ✂️','Poda de Árvore 🌳','Irrigação Inteligente 💧','Iluminação de Jardim 💡','Limpeza Geral 🧹','Adubação 🌱','Controle de Pragas 🐛','Paisagismo 🌸'];
@@ -201,19 +203,59 @@ const DS=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
 
 let conds=[],feitos={},notifs={},curTab='agenda',fSvcs=[],selDays=[],selPar='impar';
 
+// ─ Supabase REST helpers ────────────────────────────
+const SH={'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'};
+async function sbGet(table,query=''){
+  const r=await fetch(`${SUPA_URL}/rest/v1/${table}?${query}`,{headers:SH});
+  if(!r.ok)throw new Error('GET '+table+' falhou');
+  return r.json();
+}
+async function sbUpsert(table,rows,onConflict){
+  const r=await fetch(`${SUPA_URL}/rest/v1/${table}?on_conflict=${onConflict}`,{
+    method:'POST',
+    headers:{...SH,'Prefer':'resolution=merge-duplicates,return=minimal'},
+    body:JSON.stringify(rows)
+  });
+  if(!r.ok)throw new Error('UPSERT '+table+' falhou: '+(await r.text()));
+}
+async function sbDelete(table,col,val){
+  const r=await fetch(`${SUPA_URL}/rest/v1/${table}?${col}=eq.${encodeURIComponent(val)}`,{method:'DELETE',headers:SH});
+  if(!r.ok)throw new Error('DELETE '+table+' falhou');
+}
+
 // ─ Storage ─────────────────────────────────────────
 function mesKey(){return new Date().toISOString().slice(0,7);}
 function mesLbl(){return new Date().toLocaleDateString('pt-BR',{month:'long',year:'numeric'}).replace(/^\w/,c=>c.toUpperCase());}
 function dkey(d){return new Date(d).toISOString().slice(0,10);}
 function uid(){return Math.random().toString(36).slice(2,9);}
-function load(){
-  try{conds=JSON.parse(localStorage.getItem('echo-conds')||'[]');}catch{}
-  try{feitos=JSON.parse(localStorage.getItem('echo-feitos:'+mesKey())||'{}');}catch{}
-  try{notifs=JSON.parse(localStorage.getItem('echo-notifs')||'{}');}catch{}
+async function load(){
+  try{
+    const rows=await sbGet('condominios','order=nome.asc');
+    conds=rows.map(r=>({id:r.id,nome:r.nome,endereco:r.endereco||'',contato:r.contato||'',telefone:r.telefone||'',ativo:r.ativo,servicos:r.servicos||[]}));
+  }catch(e){console.warn('Erro ao carregar condomínios:',e);conds=[];}
+  try{
+    const rows=await sbGet('feitos',`mes=eq.${mesKey()}`);
+    feitos=rows[0]?.dados||{};
+  }catch(e){feitos={};}
+  try{
+    const rows=await sbGet('notifs','id=eq.1');
+    notifs=rows[0]?.dados||{};
+  }catch(e){notifs={};}
 }
-function saveConds(){localStorage.setItem('echo-conds',JSON.stringify(conds));}
-function saveFeitos(){localStorage.setItem('echo-feitos:'+mesKey(),JSON.stringify(feitos));}
-function saveNotifs(){localStorage.setItem('echo-notifs',JSON.stringify(notifs));}
+async function saveConds(){
+  try{
+    await sbUpsert('condominios',conds.map(c=>({id:c.id,nome:c.nome,endereco:c.endereco,contato:c.contato,telefone:c.telefone,ativo:c.ativo,servicos:c.servicos})),'id');
+  }catch(e){console.error(e);showToast('⚠️ Erro ao salvar no banco de dados',true);}
+}
+async function removeCondFromDB(id){
+  try{await sbDelete('condominios','id',id);}catch(e){console.error(e);}
+}
+async function saveFeitos(){
+  try{await sbUpsert('feitos',[{mes:mesKey(),dados:feitos}],'mes');}catch(e){console.error(e);}
+}
+async function saveNotifs(){
+  try{await sbUpsert('notifs',[{id:1,dados:notifs}],'id');}catch(e){console.error(e);}
+}
 
 // ─ Schedule ────────────────────────────────────────
 function isoWeek(date){
@@ -363,7 +405,7 @@ function rConds(){
 
 // ─ Actions ─────────────────────────────────────────
 function togFeito(cid,svc){const k=`${cid}|${svc}`;feitos[k]=!feitos[k];if(!feitos[k])delete feitos[k];saveFeitos();rAgenda();updHeader();}
-function delCond(id){if(!confirm('Remover?'))return;conds=conds.filter(c=>c.id!==id);saveConds();renderAll();}
+async function delCond(id){if(!confirm('Remover?'))return;conds=conds.filter(c=>c.id!==id);await removeCondFromDB(id);renderAll();}
 
 function setTab(id){
   curTab=id;
@@ -434,11 +476,15 @@ function saveForm(e){
   if(id)conds=conds.map(x=>x.id===id?c:x);else conds.push(c);
   saveConds();closeForm();renderAll();
 }
-
 // ─ Toast ───────────────────────────────────────────
 function showToast(msg,warn=false){const t=document.getElementById('toast');t.textContent=msg;t.className='toast on'+(warn?' warn':'');setTimeout(()=>t.className='toast',4000);}
 
 // ─ Init ────────────────────────────────────────────
-load();renderAll();
-setTimeout(()=>checkNotifs(false),1200);
+async function init(){
+  document.getElementById('p-agenda').innerHTML='<div style="text-align:center;padding:3rem;color:#8a9a8f">Carregando dados do banco...</div>';
+  await load();
+  renderAll();
+  setTimeout(()=>checkNotifs(false),1200);
+}
+init();
 </script>
