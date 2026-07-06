@@ -5,7 +5,6 @@
 :root{--c900:#0d2b1a;--c800:#1a4a2e;--c700:#2d6a4f;--c600:#40916c;--c500:#52b788;--c400:#74c69d;--c300:#95d5b2;--c200:#b7e4c7;--c100:#d8f3dc;--c50:#f0faf3;--g800:#1f2d26;--g600:#4a5a50;--g400:#8a9a8f;--g200:#e2ebe4}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter','Segoe UI',sans-serif;background:var(--c50);color:var(--g800);min-height:100vh}
-
 .header{background:linear-gradient(135deg,var(--c900),var(--c800));padding:1.2rem 1.5rem 1rem;box-shadow:0 2px 16px rgba(0,0,0,.3)}
 .header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.9rem;gap:.7rem}
 .header-title small{color:var(--c400);font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;display:block}
@@ -16,11 +15,9 @@ body{font-family:'Inter','Segoe UI',sans-serif;background:var(--c50);color:var(-
 .progress-label strong{font-size:.72rem;color:var(--c400);font-weight:700}
 .progress-bar{background:rgba(255,255,255,.15);border-radius:100px;height:6px;overflow:hidden}
 .progress-fill{background:linear-gradient(90deg,var(--c500),var(--c400));height:100%;border-radius:100px;transition:width .5s}
-
 .btn{border:none;border-radius:100px;cursor:pointer;font-family:inherit;font-weight:700;display:inline-flex;align-items:center;gap:.4rem;transition:all .2s}
 .btn-sm{padding:.5rem .85rem;font-size:.76rem}
 .btn-md{padding:.72rem 1.4rem;font-size:.88rem}
-.btn-lg{padding:.78rem 1.8rem;font-size:.9rem}
 .btn-primary{background:var(--c800);color:#fff}.btn-primary:hover{background:var(--c700)}
 .btn-green{background:#25D366;color:#fff;box-shadow:0 2px 8px rgba(37,211,102,.3)}.btn-green:hover{background:#20bd5a}
 .btn-amber{background:#f59e0b;color:#fff}
@@ -28,14 +25,11 @@ body{font-family:'Inter','Segoe UI',sans-serif;background:var(--c50);color:var(-
 .btn-outline{background:var(--c50);border:1.5px solid var(--c200);color:var(--c700)}
 .btn-danger{background:#fff5f5;border:1.5px solid #fecaca;color:#ef4444}
 .btn-cancel{background:none;border:1.5px solid var(--g200);color:var(--g600)}
-
 .tabs{background:#fff;border-bottom:2px solid var(--g200);display:flex;padding:0 1rem;overflow-x:auto}
 .tab-btn{background:none;border:none;border-bottom:2.5px solid transparent;margin-bottom:-2px;padding:.8rem .85rem;font-size:.82rem;font-weight:500;color:var(--g400);cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:inherit;transition:all .2s}
 .tab-btn.active{font-weight:700;color:var(--c700);border-bottom-color:var(--c500)}
-
 .content{padding:1.2rem;max-width:760px;margin:0 auto}
 .tab-pane{display:none}.tab-pane.active{display:block}
-
 .card{background:#fff;border-radius:14px;border:1.5px solid var(--g200);overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:.9rem}
 .card-hdr{background:linear-gradient(135deg,var(--c800),var(--c900));padding:.85rem 1.2rem;display:flex;align-items:center;justify-content:space-between}
 .card-hdr.done{background:linear-gradient(135deg,var(--c700),var(--c800))}
@@ -47,8 +41,7 @@ body{font-family:'Inter','Segoe UI',sans-serif;background:var(--c50);color:var(-
 .badge.done{background:var(--c500)}.badge.amber{background:#f59e0b}
 .card-body{padding:0 1.2rem}
 .crow{display:flex;align-items:center;gap:.8rem;padding:.78rem 0;border-bottom:1px solid var(--c50);cursor:pointer;user-select:none}
-.crow:last-child{border-bottom:none}
-.crow.nc{cursor:default}
+.crow:last-child{border-bottom:none}.crow.nc{cursor:default}
 .chk{width:22px;height:22px;border-radius:6px;border:2px solid var(--c100);background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;font-size:.72rem;font-weight:900;color:#fff}
 .chk.on{background:var(--c500);border-color:var(--c500)}
 .sn{font-size:.85rem;font-weight:600;color:var(--g800)}
@@ -56,36 +49,31 @@ body{font-family:'Inter','Segoe UI',sans-serif;background:var(--c50);color:var(-
 .sm{font-size:.71rem;color:var(--g400);margin-top:.08rem}
 .nb{font-size:.72rem;font-weight:700;padding:.22rem .65rem;border-radius:100px;flex-shrink:0}
 .nb.sent{color:var(--c500);background:var(--c100)}.nb.fail{color:#ef4444;background:#fef2f2}.nb.pend{color:#f59e0b;background:#fef3c7}
-
 .ci{background:#fff;border-radius:12px;border:1.5px solid var(--g200);padding:1rem 1.2rem;display:flex;align-items:center;gap:1rem;box-shadow:0 1px 6px rgba(0,0,0,.04);margin-bottom:.75rem}
 .ci-info{flex:1;min-width:0}.ci-info h3{font-weight:700;font-size:.9rem;color:var(--c800)}
 .ci-info .addr{font-size:.73rem;color:var(--g400);margin-top:.1rem}
-.ci-info .meta{font-size:.73rem;margin-top:.28rem;display:flex;align-items:center;gap:.45rem}
+.ci-info .meta{font-size:.73rem;margin-top:.28rem;display:flex;align-items:center;gap:.45rem;flex-wrap:wrap}
 .dot{width:3px;height:3px;border-radius:50%;background:var(--c100);display:inline-block}
 .ci-btns{display:flex;gap:.4rem;flex-shrink:0}
 .ci-btns button{border-radius:8px;padding:.38rem .7rem;font-size:.78rem;cursor:pointer;font-family:inherit}
 .tabbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.1rem}
 .tabbar p{font-size:.83rem;color:var(--g600)}
-
 .empty{text-align:center;padding:3.5rem 1rem;background:#fff;border-radius:14px;border:1.5px dashed var(--g200);color:var(--g400)}
 .empty .ei{font-size:3rem;margin-bottom:1rem}
 .empty h3{font-weight:700;color:var(--g600);margin-bottom:.4rem;font-size:.95rem}
 .empty p{font-size:.83rem}
-
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:999;display:none;align-items:flex-end;justify-content:center}
 .ov.open{display:flex}
 .mbox{background:#fff;border-radius:20px 20px 0 0;padding:1.5rem;width:100%;max-width:520px;max-height:93vh;overflow-y:auto}
 .mhdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem}
 .mhdr h2{font-size:1rem;font-weight:800;color:var(--c800)}
 .mcls{background:none;border:none;font-size:1.4rem;cursor:pointer;color:#aaa;line-height:1}
-
 .fg{margin-bottom:.85rem}
 .fl{display:block;font-size:.72rem;font-weight:700;color:var(--c700);margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.05em}
 .fi{background:var(--c50);border:1.5px solid var(--c100);border-radius:9px;padding:.65rem .9rem;font-size:.88rem;font-family:inherit;color:var(--g800);outline:none;width:100%;box-sizing:border-box;transition:border-color .2s}
 .fi:focus{border-color:var(--c500);box-shadow:0 0 0 3px rgba(82,183,136,.1)}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
 .fdiv{border-top:1px solid var(--g200);padding-top:.85rem;margin-top:.3rem}
-
 .sb{background:#f9fffe;border:1.5px solid var(--c100);border-radius:12px;padding:.9rem;margin-top:.5rem}
 .sb-ttl{font-size:.72rem;font-weight:700;color:var(--c700);margin-bottom:.6rem;text-transform:uppercase;letter-spacing:.04em}
 .sa{display:flex;align-items:flex-start;gap:.6rem;margin-bottom:.4rem;background:var(--c50);border-radius:9px;padding:.6rem .9rem;border:1px solid var(--c100)}
@@ -101,13 +89,27 @@ body{font-family:'Inter','Segoe UI',sans-serif;background:var(--c50);color:var(-
 .mftr{display:flex;gap:.7rem;margin-top:1rem}
 .mftr button{flex:1;border-radius:100px;padding:.75rem;font-size:.88rem;font-family:inherit;cursor:pointer;border:none}
 
+/* Planos */
+.plan-opt{display:flex;align-items:center;gap:.9rem;padding:.75rem;border-radius:10px;border:1.5px solid var(--g200);cursor:pointer;transition:all .2s;background:#fff;margin-bottom:.45rem}
+.plan-opt:hover{border-color:var(--c300);background:var(--c50)}
+.plan-opt.on.essencial{border-color:#16a34a;background:#f0fdf4}
+.plan-opt.on.profissional{border-color:#2563eb;background:#eff6ff}
+.plan-opt.on.premium{border-color:#d97706;background:#fffbeb}
+.plan-ico{font-size:1.35rem;flex-shrink:0}
+.plan-info strong{font-size:.85rem;color:var(--c800);display:block}
+.plan-info .plan-desc{font-size:.72rem;color:var(--g400);margin-top:.1rem;line-height:1.4}
+.plan-dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--g200);flex-shrink:0;transition:all .2s;margin-left:auto;position:relative}
+.plan-opt.on.essencial .plan-dot{border-color:#16a34a;background:#16a34a}
+.plan-opt.on.profissional .plan-dot{border-color:#2563eb;background:#2563eb}
+.plan-opt.on.premium .plan-dot{border-color:#d97706;background:#d97706}
+.plan-dot::after{content:'';width:7px;height:7px;border-radius:50%;background:#fff;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:none}
+.plan-opt.on .plan-dot::after{display:block}
+
 .toast{position:fixed;top:1rem;right:1rem;background:var(--c800);color:#fff;padding:.75rem 1.2rem;border-radius:12px;font-size:.85rem;font-weight:600;z-index:2000;box-shadow:0 4px 16px rgba(0,0,0,.3);display:none;max-width:280px;line-height:1.4}
 .toast.on{display:block}.toast.warn{background:#92400e}
-
 @media(max-width:480px){.frow{grid-template-columns:1fr}.header-btns{gap:.35rem}}
 </style>
 
-<!-- HEADER -->
 <div class="header">
   <div class="header-top">
     <div class="header-title">
@@ -125,7 +127,6 @@ body{font-family:'Inter','Segoe UI',sans-serif;background:var(--c50);color:var(-
   </div>
 </div>
 
-<!-- TABS -->
 <div class="tabs">
   <button class="tab-btn active" onclick="setTab('agenda')">📋 Agenda</button>
   <button class="tab-btn" id="btn-prox" onclick="setTab('proximas')">🗓️ Próximas Visitas</button>
@@ -153,6 +154,30 @@ body{font-family:'Inter','Segoe UI',sans-serif;background:var(--c50);color:var(-
         <div class="fg"><label class="fl">Contato</label><input class="fi" id="f-cont" placeholder="Síndico"></div>
         <div class="fg"><label class="fl">Telefone</label><input class="fi" id="f-tel" placeholder="(42) 9..."></div>
       </div>
+
+      <!-- PLANO -->
+      <div class="fdiv">
+        <label class="fl">Plano Contratado</label>
+        <div style="margin-top:.5rem">
+          <div class="plan-opt essencial" id="po-Essencial" onclick="selPlano('Essencial')">
+            <div class="plan-ico">🌱</div>
+            <div class="plan-info"><strong>Plano Essencial</strong><div class="plan-desc">Manutenção básica · Preço competitivo</div></div>
+            <div class="plan-dot"></div>
+          </div>
+          <div class="plan-opt profissional" id="po-Profissional" onclick="selPlano('Profissional')">
+            <div class="plan-ico">⚙️</div>
+            <div class="plan-info"><strong>Plano Profissional</strong><div class="plan-desc">Manutenção · Agendamento online · Relatórios · Comunicação facilitada</div></div>
+            <div class="plan-dot"></div>
+          </div>
+          <div class="plan-opt premium" id="po-Premium" onclick="selPlano('Premium')">
+            <div class="plan-ico">⭐</div>
+            <div class="plan-info"><strong>Plano Premium</strong><div class="plan-desc">Tudo do Profissional + Visitas extras · Atendimento prioritário · Acompanhamento frequente</div></div>
+            <div class="plan-dot"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SERVIÇOS -->
       <div class="fdiv">
         <label class="fl">Serviços Contratados</label>
         <div id="svcs-list"></div>
@@ -179,6 +204,7 @@ body{font-family:'Inter','Segoe UI',sans-serif;background:var(--c50);color:var(-
           <button type="button" class="btn btn-primary btn-md" style="width:100%;border-radius:9px;justify-content:center" onclick="addSvc()">+ Adicionar serviço</button>
         </div>
       </div>
+
       <label style="display:flex;align-items:center;gap:.6rem;cursor:pointer;margin-top:.85rem">
         <input type="checkbox" id="f-ativo" checked style="width:16px;height:16px;cursor:pointer;accent-color:#52b788">
         <span style="font-size:.85rem;font-weight:600;color:#4a5a50">Condomínio ativo</span>
@@ -194,20 +220,25 @@ body{font-family:'Inter','Segoe UI',sans-serif;background:var(--c50);color:var(-
 <div class="toast" id="toast"></div>
 
 <script>
-const SUPA_URL = 'https://nfgswtpholucdvlxlbes.supabase.co';
-const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mZ3N3dHBob2x1Y2R2bHhsYmVzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4MjIxMzgsImV4cCI6MjA5ODM5ODEzOH0.cfwjgCosRl8ESIQx5AOwBIqtlYiLhR-m-UsG-9tAbqw';
+const SUPA_URL='https://nfgswtpholucdvlxlbes.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mZ3N3dHBob2x1Y2R2bHhsYmVzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4MjIxMzgsImV4cCI6MjA5ODM5ODEzOH0.cfwjgCosRl8ESIQx5AOwBIqtlYiLhR-m-UsG-9tAbqw';
 const PHONE='5542988408840';
 const EJS={key:'lqI0oJGFLIs8N6eq_',svc:'service_u2qllop',tpl:'template_4fdj8fo'};
 const SVCS=['Corte de Grama ✂️','Poda de Árvore 🌳','Irrigação Inteligente 💧','Iluminação de Jardim 💡','Limpeza Geral 🧹','Adubação 🌱','Controle de Pragas 🐛','Paisagismo 🌸'];
 const DS=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+const PLANOS={
+  'Essencial':{ico:'🌱',bg:'#dcfce7',color:'#16a34a'},
+  'Profissional':{ico:'⚙️',bg:'#dbeafe',color:'#2563eb'},
+  'Premium':{ico:'⭐',bg:'#fef3c7',color:'#d97706'}
+};
 
-let conds=[],feitos={},notifs={},curTab='agenda',fSvcs=[],selDays=[],selPar='impar';
+let conds=[],feitos={},notifs={},curTab='agenda',fSvcs=[],selDays=[],selPar='impar',fPlano='Essencial';
 
-// ─ Supabase REST helpers ────────────────────────────
+// ─ Supabase ─────────────────────────────────────
 const SH={'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'};
 async function sbGet(table,query=''){
   const r=await fetch(`${SUPA_URL}/rest/v1/${table}?${query}`,{headers:SH});
-  if(!r.ok)throw new Error('GET '+table+' falhou');
+  if(!r.ok)throw new Error('GET '+table);
   return r.json();
 }
 async function sbUpsert(table,rows,onConflict){
@@ -216,48 +247,37 @@ async function sbUpsert(table,rows,onConflict){
     headers:{...SH,'Prefer':'resolution=merge-duplicates,return=minimal'},
     body:JSON.stringify(rows)
   });
-  if(!r.ok)throw new Error('UPSERT '+table+' falhou: '+(await r.text()));
+  if(!r.ok)throw new Error('UPSERT '+table+': '+(await r.text()));
 }
 async function sbDelete(table,col,val){
   const r=await fetch(`${SUPA_URL}/rest/v1/${table}?${col}=eq.${encodeURIComponent(val)}`,{method:'DELETE',headers:SH});
-  if(!r.ok)throw new Error('DELETE '+table+' falhou');
+  if(!r.ok)throw new Error('DELETE '+table);
 }
 
-// ─ Storage ─────────────────────────────────────────
+// ─ Storage ──────────────────────────────────────
 function mesKey(){return new Date().toISOString().slice(0,7);}
 function mesLbl(){return new Date().toLocaleDateString('pt-BR',{month:'long',year:'numeric'}).replace(/^\w/,c=>c.toUpperCase());}
 function dkey(d){return new Date(d).toISOString().slice(0,10);}
 function uid(){return Math.random().toString(36).slice(2,9);}
+
 async function load(){
   try{
     const rows=await sbGet('condominios','order=nome.asc');
-    conds=rows.map(r=>({id:r.id,nome:r.nome,endereco:r.endereco||'',contato:r.contato||'',telefone:r.telefone||'',ativo:r.ativo,servicos:r.servicos||[]}));
-  }catch(e){console.warn('Erro ao carregar condomínios:',e);conds=[];}
-  try{
-    const rows=await sbGet('feitos',`mes=eq.${mesKey()}`);
-    feitos=rows[0]?.dados||{};
-  }catch(e){feitos={};}
-  try{
-    const rows=await sbGet('notifs','id=eq.1');
-    notifs=rows[0]?.dados||{};
-  }catch(e){notifs={};}
+    conds=rows.map(r=>({id:r.id,nome:r.nome,endereco:r.endereco||'',contato:r.contato||'',telefone:r.telefone||'',ativo:r.ativo,plano:r.plano||'Essencial',servicos:r.servicos||[]}));
+  }catch(e){console.warn('Erro condomínios:',e);conds=[];}
+  try{const rows=await sbGet('feitos','mes=eq.'+mesKey());feitos=rows[0]?.dados||{};}catch{feitos={};}
+  try{const rows=await sbGet('notifs','id=eq.1');notifs=rows[0]?.dados||{};}catch{notifs={};}
 }
 async function saveConds(){
   try{
-    await sbUpsert('condominios',conds.map(c=>({id:c.id,nome:c.nome,endereco:c.endereco,contato:c.contato,telefone:c.telefone,ativo:c.ativo,servicos:c.servicos})),'id');
-  }catch(e){console.error(e);showToast('⚠️ Erro ao salvar no banco de dados',true);}
+    await sbUpsert('condominios',conds.map(c=>({id:c.id,nome:c.nome,endereco:c.endereco,contato:c.contato,telefone:c.telefone,ativo:c.ativo,plano:c.plano||'Essencial',servicos:c.servicos})),'id');
+  }catch(e){console.error(e);showToast('⚠️ Erro ao salvar',true);}
 }
-async function removeCondFromDB(id){
-  try{await sbDelete('condominios','id',id);}catch(e){console.error(e);}
-}
-async function saveFeitos(){
-  try{await sbUpsert('feitos',[{mes:mesKey(),dados:feitos}],'mes');}catch(e){console.error(e);}
-}
-async function saveNotifs(){
-  try{await sbUpsert('notifs',[{id:1,dados:notifs}],'id');}catch(e){console.error(e);}
-}
+async function removeCondFromDB(id){try{await sbDelete('condominios','id',id);}catch(e){console.error(e);}}
+async function saveFeitos(){try{await sbUpsert('feitos',[{mes:mesKey(),dados:feitos}],'mes');}catch(e){console.error(e);}}
+async function saveNotifs(){try{await sbUpsert('notifs',[{id:1,dados:notifs}],'id');}catch(e){console.error(e);}}
 
-// ─ Schedule ────────────────────────────────────────
+// ─ Schedule ─────────────────────────────────────
 function isoWeek(date){
   const d=new Date(date);d.setHours(0,0,0,0);
   d.setDate(d.getDate()+4-(d.getDay()||7));
@@ -290,11 +310,17 @@ function getVisits(days=7){
   return list.sort((a,b)=>a.date-b.date);
 }
 
-// ─ Email ───────────────────────────────────────────
-async function sendEmail(p){
+// ─ Plan badge helper ────────────────────────────
+function planBadge(plano){
+  const p=PLANOS[plano]||PLANOS['Essencial'];
+  return `<span style="font-size:.7rem;font-weight:700;padding:.18rem .6rem;border-radius:100px;background:${p.bg};color:${p.color};white-space:nowrap;flex-shrink:0">${p.ico} ${plano}</span>`;
+}
+
+// ─ Email ────────────────────────────────────────
+async function sendEmail(params){
   return fetch('https://api.emailjs.com/api/v1.0/email/send',{
     method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({service_id:EJS.svc,template_id:EJS.tpl,user_id:EJS.key,template_params:p})
+    body:JSON.stringify({service_id:EJS.svc,template_id:EJS.tpl,user_id:EJS.key,template_params:params})
   });
 }
 async function checkNotifs(manual=false){
@@ -310,29 +336,22 @@ async function checkNotifs(manual=false){
   for(const {cond,svc,date,nk,dias} of pend){
     const ds=date.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});
     try{
-      await sendEmail({
-        servico:`⚠️ Visita em ${dias} dia${dias>1?'s':''}`,
-        data:ds,horario:`${cond.nome} — ${svc.nome}`,
-        nome:'Echo Jardinagem',telefone:cond.telefone||'—',
-        endereco:cond.endereco||'—',
-        observacoes:`Frequência: ${svc.freq} | Dias: ${schedTxt(svc)}`
-      });
+      await sendEmail({servico:`⚠️ Visita em ${dias} dia${dias>1?'s':''}`,data:ds,horario:`${cond.nome} — ${svc.nome}`,nome:'Echo Jardinagem',telefone:cond.telefone||'—',endereco:cond.endereco||'—',observacoes:`Plano: ${cond.plano||'Essencial'} | Frequência: ${svc.freq} | Dias: ${schedTxt(svc)}`});
       notifs[nk]={at:new Date().toISOString(),ok:true};sent++;
     }catch{notifs[nk]={at:new Date().toISOString(),ok:false};fail++;}
   }
   saveNotifs();
-  if(btn){btn.textContent='🔔 Lembretes';}
+  if(btn)btn.textContent='🔔 Lembretes';
   if(manual)showToast(`✅ ${sent} lembrete${sent!==1?'s':''} enviado${sent!==1?'s':''}${fail>0?` · ${fail} falhou`:''}`);
   renderAll();
 }
 
-// ─ WhatsApp ────────────────────────────────────────
 function sendReport(){
   const ativos=conds.filter(c=>c.ativo!==false&&c.servicos.length>0);
   let msg=`🌿 *Echo Jardinagem — ${mesLbl()}*\n\n`;
   ativos.forEach(c=>{
     const done=c.servicos.filter(s=>feitos[`${c.id}|${s.nome}`]).length;
-    msg+=`🏢 *${c.nome}* (${done}/${c.servicos.length})\n`;
+    msg+=`🏢 *${c.nome}* · ${c.plano||'Essencial'} (${done}/${c.servicos.length})\n`;
     c.servicos.forEach(s=>{msg+=`${feitos[`${c.id}|${s.nome}`]?'✅':'⏳'} ${s.nome} · ${s.freq}\n`;});
     msg+='\n';
   });
@@ -341,29 +360,22 @@ function sendReport(){
   window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
-// ─ Render ──────────────────────────────────────────
+// ─ Render ───────────────────────────────────────
 function renderAll(){updHeader();if(curTab==='agenda')rAgenda();if(curTab==='proximas')rProx();if(curTab==='condominios')rConds();updProxBtn();}
-
 function updHeader(){
   const ativos=conds.filter(c=>c.ativo!==false);
   const tot=ativos.reduce((a,c)=>a+c.servicos.length,0);
   const done=ativos.reduce((a,c)=>a+c.servicos.filter(s=>feitos[`${c.id}|${s.nome}`]).length,0);
   const pct=tot>0?Math.round(done/tot*100):0;
   const pw=document.getElementById('prog-wrap');
-  if(tot>0){
-    pw.style.display='block';
-    document.getElementById('mes-lbl').textContent=mesLbl();
-    document.getElementById('prog-txt').textContent=`${done}/${tot} · ${pct}%`;
-    document.getElementById('prog-fill').style.width=pct+'%';
-  } else pw.style.display='none';
+  if(tot>0){pw.style.display='block';document.getElementById('mes-lbl').textContent=mesLbl();document.getElementById('prog-txt').textContent=`${done}/${tot} · ${pct}%`;document.getElementById('prog-fill').style.width=pct+'%';}
+  else pw.style.display='none';
   const hoje=new Date();hoje.setHours(0,0,0,0);
   const pendN=getVisits(3).filter(v=>{const d=Math.round((v.date-hoje)/86400000);return d>=1&&d<=3&&!notifs[`${v.cond.id}|${v.svc.nome}|${dkey(v.date)}`];}).length;
   const btn=document.getElementById('btn-lem');
   if(btn){btn.textContent=pendN>0?`🔔 ${pendN} pendente${pendN>1?'s':''}​`:'🔔 Lembretes';btn.className=`btn btn-sm ${pendN>0?'btn-amber':'btn-ghost'}`;}
 }
-function updProxBtn(){
-  const v=getVisits(7);document.getElementById('btn-prox').textContent=`🗓️ Próximas${v.length>0?` (${v.length})`:''}`;
-}
+function updProxBtn(){const v=getVisits(7);document.getElementById('btn-prox').textContent=`🗓️ Próximas${v.length>0?` (${v.length})`:''}`;}
 function empty(ico,ttl,sub){return`<div class="empty"><div class="ei">${ico}</div><h3>${ttl}</h3><p>${sub}</p></div>`;}
 
 function rAgenda(){
@@ -376,7 +388,7 @@ function rAgenda(){
     const rows=c.servicos.length===0?'<div style="padding:1rem 1.2rem;color:#8a9a8f;font-size:.83rem">Nenhum serviço</div>':
       `<div class="card-body">${c.servicos.map(s=>{const k=`${c.id}|${s.nome}`;const ck=feitos[k];
       return`<div class="crow" onclick="togFeito('${c.id}','${esc(s.nome)}')"><div class="chk ${ck?'on':''}">${ck?'✓':''}</div><div style="flex:1"><div class="sn ${ck?'done':''}">${s.nome}</div><div class="sm">🔄 ${s.freq}${schedTxt(s)?' · '+schedTxt(s):''}</div></div></div>`;}).join('')}</div>`;
-    return`<div class="card"><div class="card-hdr ${all?'done':''}"><div><h3>${c.nome}</h3>${c.contato?`<p>👤 ${c.contato}${c.telefone?' · '+c.telefone:''}</p>`:''}</div><div class="badge ${all?'done':''}">${done}/${c.servicos.length}${all?' ✅':''}</div></div>${rows}</div>`;
+    return`<div class="card"><div class="card-hdr ${all?'done':''}"><div><h3>${c.nome}</h3>${c.contato?`<p>👤 ${c.contato}${c.telefone?' · '+c.telefone:''}</p>`:''}</div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:.35rem"><div class="badge ${all?'done':''}">${done}/${c.servicos.length}${all?' ✅':''}</div>${planBadge(c.plano||'Essencial')}</div></div>${rows}</div>`;
   }).join('');
 }
 
@@ -390,7 +402,7 @@ function rProx(){
     const dlbl=dias===1?'Amanhã ⚡':dias===2?'Em 2 dias ⚠️':d.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});
     const rows=vs.map(v=>{const nk=`${v.cond.id}|${v.svc.nome}|${dk}`;const n=notifs[nk];
       const nb=n?(n.ok?'<span class="nb sent">✉️ Enviado</span>':'<span class="nb fail">❌ Falhou</span>'):'<span class="nb pend">⏳ Pendente</span>';
-      return`<div class="crow nc"><div style="flex:1"><div style="font-size:.86rem;font-weight:700;color:#1a4a2e">${v.cond.nome}</div><div style="font-size:.74rem;color:#4a5a50;margin-top:.12rem">${v.svc.nome} · ${v.svc.freq}</div>${v.cond.endereco?`<div style="font-size:.7rem;color:#8a9a8f;margin-top:.08rem">📍 ${v.cond.endereco}</div>`:''}</div>${nb}</div>`;
+      return`<div class="crow nc"><div style="flex:1"><div style="font-size:.86rem;font-weight:700;color:#1a4a2e">${v.cond.nome}</div><div style="font-size:.74rem;color:#4a5a50;margin-top:.12rem">${v.svc.nome} · ${v.svc.freq}</div>${v.cond.endereco?`<div style="font-size:.7rem;color:#8a9a8f">📍 ${v.cond.endereco}</div>`:''}</div>${nb}</div>`;
     }).join('');
     return`<div class="card"><div class="card-hdr ${urg?'urgent':''}"><div><h3>${dlbl.charAt(0).toUpperCase()+dlbl.slice(1)}</h3><p class="${urg?'urg':''}">${d.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})}</p></div><div class="badge ${urg?'amber':''}">${dias} dia${dias>1?'s':''}</div></div><div class="card-body">${rows}</div></div>`;
   }).join('');
@@ -400,13 +412,12 @@ function rConds(){
   const el=document.getElementById('p-condominios');
   el.innerHTML=`<div class="tabbar"><p>${conds.length} condomínio${conds.length!==1?'s':''}</p><button class="btn btn-primary btn-sm" onclick="openForm()">+ Novo</button></div>`+
   (!conds.length?empty('🏢','Nenhum condomínio ainda','Clique em "+ Novo" para começar'):
-  conds.map(c=>`<div class="ci"><div class="ci-info"><h3>${c.nome}</h3>${c.endereco?`<div class="addr">📍 ${c.endereco}</div>`:''}<div class="meta"><span style="color:#52b788;font-weight:600">${c.servicos.length} serviço${c.servicos.length!==1?'s':''}</span><span class="dot"></span><span style="color:${c.ativo!==false?'#2d6a4f':'#8a9a8f'};font-weight:600">${c.ativo!==false?'Ativo':'Inativo'}</span></div></div><div class="ci-btns"><button class="btn btn-outline" onclick="openForm('${c.id}')">✏️</button><button class="btn btn-danger" onclick="delCond('${c.id}')">🗑️</button></div></div>`).join(''));
+  conds.map(c=>`<div class="ci"><div class="ci-info"><h3>${c.nome}</h3>${c.endereco?`<div class="addr">📍 ${c.endereco}</div>`:''}<div class="meta">${planBadge(c.plano||'Essencial')}<span class="dot"></span><span style="font-size:.73rem;color:${c.ativo!==false?'#2d6a4f':'#8a9a8f'};font-weight:600">${c.servicos.length} serviço${c.servicos.length!==1?'s':''}</span><span class="dot"></span><span style="font-size:.73rem;color:${c.ativo!==false?'#2d6a4f':'#8a9a8f'};font-weight:600">${c.ativo!==false?'Ativo':'Inativo'}</span></div></div><div class="ci-btns"><button class="btn btn-outline" onclick="openForm('${c.id}')">✏️</button><button class="btn btn-danger" onclick="delCond('${c.id}')">🗑️</button></div></div>`).join(''));
 }
 
-// ─ Actions ─────────────────────────────────────────
+// ─ Actions ──────────────────────────────────────
 function togFeito(cid,svc){const k=`${cid}|${svc}`;feitos[k]=!feitos[k];if(!feitos[k])delete feitos[k];saveFeitos();rAgenda();updHeader();}
 async function delCond(id){if(!confirm('Remover?'))return;conds=conds.filter(c=>c.id!==id);await removeCondFromDB(id);renderAll();}
-
 function setTab(id){
   curTab=id;
   document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',['agenda','proximas','condominios'][i]===id));
@@ -415,7 +426,16 @@ function setTab(id){
   renderAll();
 }
 
-// ─ Form ────────────────────────────────────────────
+// ─ Plan selector ────────────────────────────────
+function selPlano(p){
+  fPlano=p;
+  ['Essencial','Profissional','Premium'].forEach(x=>{
+    const el=document.getElementById('po-'+x);
+    if(el) el.classList.toggle('on',x===p);
+  });
+}
+
+// ─ Form ─────────────────────────────────────────
 function esc(s){return(s+'').replace(/'/g,"\\'");}
 function openForm(id){
   fSvcs=[];selDays=[];selPar='impar';
@@ -427,6 +447,7 @@ function openForm(id){
   document.getElementById('f-cont').value=c?.contato||'';
   document.getElementById('f-tel').value=c?.telefone||'';
   document.getElementById('f-ativo').checked=c?c.ativo!==false:true;
+  selPlano(c?.plano||'Essencial');
   fSvcs=c?c.servicos.map(s=>({...s,agendamento:{...s.agendamento}})):[];
   const sel=document.getElementById('ns-nome');
   sel.innerHTML=SVCS.map(s=>`<option>${s}</option>`).join('');
@@ -438,7 +459,6 @@ function openForm(id){
   document.getElementById('ov').classList.add('open');
 }
 function closeForm(){document.getElementById('ov').classList.remove('open');}
-
 function rFormSvcs(){
   const el=document.getElementById('svcs-list');
   el.innerHTML=!fSvcs.length?'<div style="font-size:.8rem;color:#8a9a8f;margin-bottom:.6rem">Nenhum serviço adicionado</div>':
@@ -460,9 +480,7 @@ function togDay(d){
   const i=selDays.indexOf(d);if(i>=0)selDays.splice(i,1);else selDays.push(d);selDays.sort((a,b)=>a-b);
   document.querySelectorAll('.dbtn').forEach(b=>b.classList.toggle('on',selDays.includes(parseInt(b.dataset.d))));
 }
-function setPar(p){
-  selPar=p;document.querySelectorAll('.wtgl button').forEach(b=>b.classList.toggle('on',b.dataset.p===p));
-}
+function setPar(p){selPar=p;document.querySelectorAll('.wtgl button').forEach(b=>b.classList.toggle('on',b.dataset.p===p));}
 function updFreq(){
   const f=document.getElementById('ns-freq').value;
   document.getElementById('dias-wrap').style.display=f==='Mensal'?'none':'block';
@@ -472,18 +490,18 @@ function updFreq(){
 function saveForm(e){
   e.preventDefault();
   const id=document.getElementById('f-id').value;
-  const c={id:id||uid(),nome:document.getElementById('f-nome').value.trim(),endereco:document.getElementById('f-end').value.trim(),contato:document.getElementById('f-cont').value.trim(),telefone:document.getElementById('f-tel').value.trim(),ativo:document.getElementById('f-ativo').checked,servicos:fSvcs};
+  const c={id:id||uid(),nome:document.getElementById('f-nome').value.trim(),endereco:document.getElementById('f-end').value.trim(),contato:document.getElementById('f-cont').value.trim(),telefone:document.getElementById('f-tel').value.trim(),ativo:document.getElementById('f-ativo').checked,plano:fPlano||'Essencial',servicos:fSvcs};
   if(id)conds=conds.map(x=>x.id===id?c:x);else conds.push(c);
   saveConds();closeForm();renderAll();
 }
-// ─ Toast ───────────────────────────────────────────
+
+// ─ Toast ────────────────────────────────────────
 function showToast(msg,warn=false){const t=document.getElementById('toast');t.textContent=msg;t.className='toast on'+(warn?' warn':'');setTimeout(()=>t.className='toast',4000);}
 
-// ─ Init ────────────────────────────────────────────
+// ─ Init ─────────────────────────────────────────
 async function init(){
-  document.getElementById('p-agenda').innerHTML='<div style="text-align:center;padding:3rem;color:#8a9a8f">Carregando dados do banco...</div>';
-  await load();
-  renderAll();
+  document.getElementById('p-agenda').innerHTML='<div style="text-align:center;padding:3rem;color:#8a9a8f">Carregando dados...</div>';
+  await load();renderAll();
   setTimeout(()=>checkNotifs(false),1200);
 }
 init();
